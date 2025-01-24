@@ -1,8 +1,7 @@
 package frc.robot;
 
-// import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-// import com.pathplanner.lib.util.PIDConstants;
-// import com.pathplanner.lib.util.ReplanningConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.config.PIDConstants;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -40,13 +39,15 @@ public class Constants {
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
     public static final double NEO_MAX_SPEED = 5676;
 
-    // public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-    //   new PIDConstants(2.0, 0, .7),
-    //   new PIDConstants(2.0,0,.7),
-    //   3.5,
-    //   .3724,
-    //   new ReplanningConfig()
-    // );
+    public static final Translation2d flModuleOffset = new Translation2d(0.546 / 2.0, -0.546 / 2.0);
+    public static final Translation2d frModuleOffset = new Translation2d(0.546 / 2.0, -0.546 / 2.0);
+    public static final Translation2d blModuleOffset = new Translation2d(-0.546 / 2.0, 0.546 / 2.0);
+    public static final Translation2d brModuleOffset = new Translation2d(-0.546 / 2.0, -0.546 / 2.0);
+
+    public static final double maxModuleSpeed = 4.5; // M/S
+
+    public static final PIDConstants translationConstants = new PIDConstants(2.0,0,0.7);
+    public static final PIDConstants rotationConstants = new PIDConstants(2.0,0,0.7);
 
     public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
       new Translation2d(WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0),

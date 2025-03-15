@@ -1,11 +1,11 @@
-package frc.robot.subsystems.funnel;
+package frc.robot.subsystems.Mechanisms;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.*;
-import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 
 import frc.robot.Configs;
 
@@ -15,7 +15,7 @@ public class CoralFunnel extends SubsystemBase {
 
     public CoralFunnel() {
 
-        m_funnelWheel.configure(Configs.CoralFunnel.FUNNEL_CONFIG, null, null);
+        m_funnelWheel.configure(Configs.SparkConfigs.FUNNEL_CONFIG, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 

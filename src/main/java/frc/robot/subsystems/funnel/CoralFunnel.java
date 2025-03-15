@@ -9,7 +9,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 
 import frc.robot.Configs;
 
-public class CoralFunnel {
+public class CoralFunnel extends SubsystemBase {
     
     private final SparkMax m_funnelWheel = new SparkMax(30, MotorType.kBrushless);
 

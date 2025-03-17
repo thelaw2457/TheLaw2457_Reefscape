@@ -19,7 +19,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   private final SparkMax m_elevatorMotorL = new SparkMax(47, SparkMax.MotorType.kBrushless);
   private final SparkMax m_elevatorMotorR = new SparkMax(42, SparkMax.MotorType.kBrushless);
 
-  private final AnalogPotentiometer elevatorPot = new AnalogPotentiometer(3, 27, 0); //TODO: Change offset of pot
+  private final AnalogPotentiometer elevatorPot = new AnalogPotentiometer(3, 27, -0.215); //TODO: Change offset of pot
 
   public ElevatorSubsystem() {
 

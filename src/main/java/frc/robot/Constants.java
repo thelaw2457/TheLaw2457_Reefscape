@@ -61,6 +61,9 @@ public final class Constants
     public static final double ELEV_LVL3 = 0.4;
     public static final double ELEV_CLIMB = 0.5;
 
+    public static final double ELEV_UP = 0.1;
+    public static final double ELEV_DOWN = -0.1;
+
   }
 
   public static final class PivotConstants
@@ -72,6 +75,10 @@ public final class Constants
     public static final double PIVOT_INTAKE = 0.1;
     public static final double PIVOT_MID_SCORE = 0.2;
     public static final double PIVOT_HIGH_SCORE = 0.3;
+
+    public static final double PIVOT_UP_SPEED = 0.1;
+    public static final double PIVOT_DOWN_SPEED = -0.1;
+
   }
 
   public static final class FunnelConstants

@@ -11,7 +11,7 @@ import frc.robot.Configs;
 
 public class CoralFunnel extends SubsystemBase {
     
-    private final SparkMax m_funnelWheel = new SparkMax(30, MotorType.kBrushless);
+    private final SparkMax m_funnelWheel = new SparkMax(41, MotorType.kBrushless);
 
     public CoralFunnel() {
 

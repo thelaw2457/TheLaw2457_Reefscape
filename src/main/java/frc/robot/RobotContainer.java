@@ -31,6 +31,10 @@ import frc.robot.commands.Elevator.ElevatorStartPos;
 import frc.robot.commands.Pivot.PIvotIntakePos;
 import frc.robot.commands.Pivot.PivotHighPos;
 import frc.robot.commands.Pivot.PivotMidPos;
+import frc.robot.commands.Elevator.ElevatorUp;
+import frc.robot.commands.Elevator.ElevatorDown;
+import frc.robot.commands.Pivot.PivotManualUp;
+import frc.robot.commands.Pivot.PivotManualDown;
 import frc.robot.subsystems.Mechanisms.AlgaeSubsystem;
 import frc.robot.subsystems.Mechanisms.CoralFunnel;
 import frc.robot.subsystems.Mechanisms.ElevatorSubsystem;
@@ -52,6 +56,7 @@ public class RobotContainer
   final         CommandXboxController driverXbox = new CommandXboxController(0);
   // final         Joystick              driverJoystick = new Joystick(1);
   final XboxController operatorXbox = new XboxController(1);
+  final XboxController secondXbox = new XboxController(2);
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/neo"));
@@ -118,6 +123,7 @@ public class RobotContainer
   {
     // Configure the trigger bindings
     configureBindings();
+    configureButtonBindings();
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
   }
@@ -214,9 +220,16 @@ public class RobotContainer
     new JoystickButton(operatorXbox, 1).whileTrue(new PivotMidPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_MID_SCORE));
     new JoystickButton(operatorXbox, 2).whileTrue(new PivotHighPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_HIGH_SCORE));
 
+    new JoystickButton(secondXbox, 5).whileTrue(new PivotManualUp(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_UP_SPEED));
+    new JoystickButton(secondXbox, 6).whileTrue(new PivotManualDown(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_DOWN_SPEED));
+
     //Coral Spit & Algae Slurp
     new JoystickButton(operatorXbox, 6).whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_SPIT_SPEED));
     new JoystickButton(operatorXbox, 5).whileTrue(new AlgaeSlurp(m_algaeSubsystem, Constants.AlgaeConstants.ALGAE_SLURP_SPEED));
+
+    //Manual Up & Down
+    new JoystickButton(secondXbox, 1).whileTrue(new ElevatorUp(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_UP));
+    new JoystickButton(secondXbox, 2).whileTrue(new ElevatorDown(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_DOWN));
 
   }
 

@@ -13,10 +13,10 @@ public final class Configs {
         public static final SparkMaxConfig ALGAE_CONFIG = new SparkMaxConfig();
 
         static {
-            FUNNEL_CONFIG.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+            FUNNEL_CONFIG.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
-            L_ELEV_CONFIG.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
-            R_ELEV_CONFIG.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+            L_ELEV_CONFIG.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+            R_ELEV_CONFIG.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
             PIVOT_CONFIG.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 

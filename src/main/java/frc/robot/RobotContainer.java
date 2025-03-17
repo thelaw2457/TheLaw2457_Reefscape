@@ -16,8 +16,25 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Algae.AlgaeSlurp;
+import frc.robot.commands.Coral.funnelSpit;
+import frc.robot.commands.Elevator.ElevatorClimb;
+import frc.robot.commands.Elevator.ElevatorLvl1;
+import frc.robot.commands.Elevator.ElevatorLvl2;
+import frc.robot.commands.Elevator.ElevatorLvl3;
+import frc.robot.commands.Elevator.ElevatorStartPos;
+import frc.robot.commands.Pivot.PIvotIntakePos;
+import frc.robot.commands.Pivot.PivotHighPos;
+import frc.robot.commands.Pivot.PivotMidPos;
+import frc.robot.subsystems.Mechanisms.AlgaeSubsystem;
+import frc.robot.subsystems.Mechanisms.CoralFunnel;
+import frc.robot.subsystems.Mechanisms.ElevatorSubsystem;
+import frc.robot.subsystems.Mechanisms.FunnelPivotSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -33,10 +50,16 @@ public class RobotContainer
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   final         CommandXboxController driverXbox = new CommandXboxController(0);
-  final         Joystick              driverJoystick = new Joystick(1);
+  // final         Joystick              driverJoystick = new Joystick(1);
+  final XboxController operatorXbox = new XboxController(1);
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem       drivebase  = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/neo"));
+
+  private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem();
+  private final FunnelPivotSubsystem m_funnelPivotSubsystem = new FunnelPivotSubsystem();
+  private final CoralFunnel m_coralFunnelSubsystem = new CoralFunnel();
+  private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
@@ -172,6 +195,28 @@ public class RobotContainer
       driverXbox.leftBumper().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
       driverXbox.rightBumper().onTrue(Commands.none());
     }
+
+  }
+
+  private void configureButtonBindings()
+  {
+    // Configure your button bindings here
+
+    //Elevator Control
+    new POVButton(operatorXbox, 180).whileTrue(new ElevatorStartPos(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_START));
+    new POVButton(operatorXbox, 270).whileTrue(new ElevatorLvl1(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL1));
+    new POVButton(operatorXbox, 90).whileTrue(new ElevatorLvl2(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL2));
+    new POVButton(operatorXbox, 0).whileTrue(new ElevatorLvl3(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL3));
+    new JoystickButton(operatorXbox, 4).whileTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMB));
+
+    //Funnel Pivot Control
+    new JoystickButton(operatorXbox, 3).whileTrue(new PIvotIntakePos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_INTAKE));
+    new JoystickButton(operatorXbox, 1).whileTrue(new PivotMidPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_MID_SCORE));
+    new JoystickButton(operatorXbox, 2).whileTrue(new PivotHighPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_HIGH_SCORE));
+
+    //Coral Spit & Algae Slurp
+    new JoystickButton(operatorXbox, 6).whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_SPIT_SPEED));
+    new JoystickButton(operatorXbox, 5).whileTrue(new AlgaeSlurp(m_algaeSubsystem, Constants.AlgaeConstants.ALGAE_SLURP_SPEED));
 
   }
 

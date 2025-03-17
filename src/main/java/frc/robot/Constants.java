@@ -56,9 +56,9 @@ public final class Constants
     public static final double ELEV_KD = 0.1;
     
     public static final double ELEV_START = 0.1;
-    public static final double ELEV_LVL1 = 0.2;
-    public static final double ELEV_LVL2 = 0.3;
-    public static final double ELEV_LVL3 = 0.4;
+    public static final double ELEV_LVL1 = 5.1;
+    public static final double ELEV_LVL2 = 13.8;
+    public static final double ELEV_LVL3 = 24;
     public static final double ELEV_CLIMB = 0.5;
 
     public static final double ELEV_UP = 0.1;
@@ -72,8 +72,8 @@ public final class Constants
     public static final double PIVOT_KI = 0;
     public static final double PIVOT_KD = 0.1;
 
-    public static final double PIVOT_INTAKE = 0.1;
-    public static final double PIVOT_MID_SCORE = 0.2;
+    public static final double PIVOT_INTAKE = 0.39;
+    public static final double PIVOT_MID_SCORE = 0.659;
     public static final double PIVOT_HIGH_SCORE = 0.3;
 
     public static final double PIVOT_UP_SPEED = 0.1;

@@ -48,4 +48,40 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.1;
     public static final double TURN_CONSTANT    = 6;
   }
+
+  public static final class ElevatorConstants
+  {
+    public static final double ELEV_KP = 0.1;
+    public static final double ELEV_KI = 0;
+    public static final double ELEV_KD = 0.1;
+    
+    public static final double ELEV_START = 0.1;
+    public static final double ELEV_LVL1 = 0.2;
+    public static final double ELEV_LVL2 = 0.3;
+    public static final double ELEV_LVL3 = 0.4;
+    public static final double ELEV_CLIMB = 0.5;
+
+  }
+
+  public static final class PivotConstants
+  {
+    public static final double PIVOT_KP = 0.1;
+    public static final double PIVOT_KI = 0;
+    public static final double PIVOT_KD = 0.1;
+
+    public static final double PIVOT_INTAKE = 0.1;
+    public static final double PIVOT_MID_SCORE = 0.2;
+    public static final double PIVOT_HIGH_SCORE = 0.3;
+  }
+
+  public static final class FunnelConstants
+  {
+    public static final double FUNNEL_SPIT_SPEED = 0.1;
+  }
+
+  public static final class AlgaeConstants
+  {
+    public static final double ALGAE_SLURP_SPEED = 0.1;
+  }
+
 }

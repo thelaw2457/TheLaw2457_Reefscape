@@ -65,6 +65,7 @@ public class RobotContainer
   private final FunnelPivotSubsystem m_funnelPivotSubsystem = new FunnelPivotSubsystem();
   private final CoralFunnel m_coralFunnelSubsystem = new CoralFunnel();
   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+  private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem(null);
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
@@ -210,7 +211,7 @@ public class RobotContainer
 
     //Elevator Control
     new POVButton(operatorXbox, 180).whileTrue(new ElevatorStartPos(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_START));
-    new POVButton(operatorXbox, 270).whileTrue(new ElevatorLvl1(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL1));
+    new JoystickButton(secondXbox, 3).whileTrue(new ElevatorLvl1(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL1));
     new POVButton(operatorXbox, 90).whileTrue(new ElevatorLvl2(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL2));
     new POVButton(operatorXbox, 0).whileTrue(new ElevatorLvl3(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL3));
     new JoystickButton(operatorXbox, 4).whileTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMB));
@@ -230,6 +231,8 @@ public class RobotContainer
     //Manual Up & Down
     new JoystickButton(secondXbox, 1).whileTrue(new ElevatorUp(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_UP));
     new JoystickButton(secondXbox, 2).whileTrue(new ElevatorDown(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_DOWN));
+
+    driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
 
   }
 

@@ -18,7 +18,7 @@ public final class Configs {
             L_ELEV_CONFIG.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
             R_ELEV_CONFIG.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
-            PIVOT_CONFIG.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+            PIVOT_CONFIG.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
 
             ALGAE_CONFIG.inverted(false).idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
         }

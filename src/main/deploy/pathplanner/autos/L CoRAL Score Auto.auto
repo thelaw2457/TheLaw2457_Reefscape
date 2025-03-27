@@ -1,0 +1,55 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Start To BL Reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Elev L2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Score"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Spit"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BL Reef To L CRL-ST"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "L CRL_ST Backup"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle to Back Reef"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pivot Algae"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Algae Slurp"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Elev Start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back Reef to Left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Elev L2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Scoring"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Spit"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

@@ -22,7 +22,7 @@ public final class Constants
   public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
   public static final Matter CHASSIS    = new Matter(new Translation3d(30, 29, Units.inchesToMeters(8)), ROBOT_MASS);
   public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
-  public static final double MAX_SPEED  = Units.feetToMeters(11.5);
+  public static final double MAX_SPEED  = Units.feetToMeters(8.2);
   // Maximum speed of the robot in meters per second, used to limit acceleration.
 
 //  public static final class AutonConstants
@@ -51,30 +51,35 @@ public final class Constants
 
   public static final class ElevatorConstants
   {
-    public static final double ELEV_KP = 0.1;
-    public static final double ELEV_KI = 0;
-    public static final double ELEV_KD = 0.5;
+    public static final double ELEV_KP = 0.06;
+    public static final double ELEV_KI = 0.008;
+    public static final double ELEV_KD = 0;
     
-    public static final double ELEV_START = 0.1;
-    public static final double ELEV_LVL1 = 5.1;
-    public static final double ELEV_LVL2 = 13.8;
-    public static final double ELEV_LVL3 = 24;
-    public static final double ELEV_CLIMB = 0.5;
+    public static final double ELEV_START = 0.3;
+    public static final double ELEV_LVL1 = 6.39;
+    public static final double ELEV_LVL2 = 13.25;
+    public static final double ELEV_LVL3 = 23.2;
+    public static final double ELEV_CLIMB = 15;
+    public static final double ELEV_CLIMBED = 2.5;
 
     public static final double ELEV_UP = 0.1;
     public static final double ELEV_DOWN = -0.1;
+
+    public static boolean LVL2_SWITCH = false;
 
   }
 
   public static final class PivotConstants
   {
     public static final double PIVOT_KP = 2;
-    public static final double PIVOT_KI = 0;
-    public static final double PIVOT_KD = 1;
+    public static final double PIVOT_KI = 1.8;
+    public static final double PIVOT_KD = 0;
 
-    public static final double PIVOT_INTAKE = 0.34;
-    public static final double PIVOT_MID_SCORE = 0.67;
-    public static final double PIVOT_HIGH_SCORE = 0.3;
+    public static final double PIVOT_INTAKE = 0.39;
+    public static final double PIVOT_MID_SCORE = 0.659;
+    public static final double PIVOT_STARTING = 0.493;
+    public static final double PIVOT_HIGH_SCORE = 0.8;
+    public static final double PIVOT_ALGAE_SCORE = 0.7;
 
     public static final double PIVOT_UP_SPEED = 0.1;
     public static final double PIVOT_DOWN_SPEED = -0.1;
@@ -84,6 +89,8 @@ public final class Constants
   public static final class FunnelConstants
   {
     public static final double FUNNEL_SPIT_SPEED = 0.6;
+    public static final double FUNNEL_DROOL_SPEED = 0.2;
+    public static final double FUNNEL_SUCK_SPEED = -0.2;
   }
 
   public static final class AlgaeConstants

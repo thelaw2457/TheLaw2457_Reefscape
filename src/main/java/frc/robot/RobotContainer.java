@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,14 +18,20 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Algae.AlgaeSlurp;
 import frc.robot.commands.Coral.funnelSpit;
+import frc.robot.commands.Elevator.AutoELVHome;
+import frc.robot.commands.Elevator.AutoLv2ELV;
 import frc.robot.commands.Elevator.ElevatorClimb;
 import frc.robot.commands.Elevator.ElevatorLvl1;
 import frc.robot.commands.Elevator.ElevatorLvl2;
@@ -65,7 +74,8 @@ public class RobotContainer
   private final FunnelPivotSubsystem m_funnelPivotSubsystem = new FunnelPivotSubsystem();
   private final CoralFunnel m_coralFunnelSubsystem = new CoralFunnel();
   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
-  private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem(null);
+
+  private final SendableChooser<Command> autoChooser;
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
@@ -125,8 +135,30 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
     configureButtonBindings();
+    configureNamedAutoCommands();
     DriverStation.silenceJoystickConnectionWarning(true);
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Mode", autoChooser);
+
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
+  }
+
+  public void configureNamedAutoCommands() {
+    NamedCommands.registerCommand("Elev L2", new AutoLv2ELV(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_UP));
+    NamedCommands.registerCommand("Elev L3", new ElevatorLvl3(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL2));
+    NamedCommands.registerCommand("Elev Start", new AutoELVHome(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_START));
+    NamedCommands.registerCommand("Pivot Scoring", new PivotMidPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_MID_SCORE));
+    NamedCommands.registerCommand("Pivot Home", new PivotMidPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_STARTING));
+    NamedCommands.registerCommand("Pivot Intake", new PIvotIntakePos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_INTAKE));
+    NamedCommands.registerCommand("Pivot Algae", new PivotHighPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_ALGAE_SCORE));
+    NamedCommands.registerCommand("Algae Slurp", new InstantCommand(() -> m_algaeSubsystem.set(Constants.AlgaeConstants.ALGAE_SLURP_SPEED))
+    .andThen(new WaitCommand(1))
+    .andThen(new InstantCommand(() -> m_algaeSubsystem.set(0))));
+    NamedCommands.registerCommand("Coral Spit", new InstantCommand(() -> m_coralFunnelSubsystem.set(Constants.FunnelConstants.FUNNEL_SPIT_SPEED))
+    .andThen(new WaitCommand(1))
+    .andThen(new InstantCommand(() -> m_coralFunnelSubsystem.set(0))));
+
   }
 
   /**
@@ -210,30 +242,40 @@ public class RobotContainer
     // Configure your button bindings here
 
     //Elevator Control
-    new POVButton(operatorXbox, 180).whileTrue(new ElevatorStartPos(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_START));
-    new JoystickButton(secondXbox, 3).whileTrue(new ElevatorLvl1(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL1));
-    new POVButton(operatorXbox, 90).whileTrue(new ElevatorLvl2(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL2));
-    new POVButton(operatorXbox, 0).whileTrue(new ElevatorLvl3(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL3));
-    new JoystickButton(operatorXbox, 4).whileTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMB));
+    new POVButton(operatorXbox, 180).onTrue(new ElevatorStartPos(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_START));
+    new POVButton(operatorXbox, 270).onTrue(new ElevatorLvl1(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL1));
+    new POVButton(operatorXbox, 90).onTrue(new ElevatorLvl2(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL2));
+    new JoystickButton(operatorXbox, 4).onTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMB));
+    new JoystickButton(operatorXbox, 9).onTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMBED));
 
     //Funnel Pivot Control
-    new JoystickButton(operatorXbox, 3).whileTrue(new PIvotIntakePos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_INTAKE));
-    new JoystickButton(operatorXbox, 1).whileTrue(new PivotMidPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_MID_SCORE));
-    new JoystickButton(operatorXbox, 2).whileTrue(new PivotHighPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_HIGH_SCORE));
+    new JoystickButton(operatorXbox, 3).onTrue(new PIvotIntakePos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_INTAKE));
+    new JoystickButton(operatorXbox, 1).onTrue(new PivotMidPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_MID_SCORE));
+    new JoystickButton(operatorXbox, 2).onTrue(new PivotHighPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_STARTING));
+    // new JoystickButton(operatorXbox, 7).onTrue(new PivotHighPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_HIGH_SCORE));
 
     new JoystickButton(secondXbox, 5).whileTrue(new PivotManualUp(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_UP_SPEED));
     new JoystickButton(secondXbox, 6).whileTrue(new PivotManualDown(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_DOWN_SPEED));
 
     //Coral Spit & Algae Slurp
-    new JoystickButton(operatorXbox, 6).whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_SPIT_SPEED));
-    new JoystickButton(operatorXbox, 5).whileTrue(new AlgaeSlurp(m_algaeSubsystem, Constants.AlgaeConstants.ALGAE_SLURP_SPEED));
+    // new JoystickButton(driverXbox, 6).whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_SPIT_SPEED));
+    // new JoystickButton(driverXbox, 5).whileTrue(new AlgaeSlurp(m_algaeSubsystem, Constants.AlgaeConstants.ALGAE_SLURP_SPEED));
+    // new JoystickButton(driverXbox, 5).whileTrue(new PivotManualUp(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_UP_SPEED));
+    driverXbox.back().whileTrue(new PivotManualUp(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_UP_SPEED));
+    driverXbox.back().whileTrue(new AlgaeSlurp(m_algaeSubsystem, Constants.AlgaeConstants.ALGAE_SLURP_SPEED));
+    driverXbox.start().whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_SPIT_SPEED));
+    // new JoystickButton(operatorXbox, 8).whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_DROOL_SPEED));
+
+    driverXbox.b().onTrue(new PivotHighPos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_ALGAE_SCORE));
+
+    new JoystickButton(operatorXbox, 6).whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_DROOL_SPEED));
+    new JoystickButton(operatorXbox, 5).whileTrue(new funnelSpit(m_coralFunnelSubsystem, Constants.FunnelConstants.FUNNEL_SUCK_SPEED));
 
     //Manual Up & Down
     new JoystickButton(secondXbox, 1).whileTrue(new ElevatorUp(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_UP));
     new JoystickButton(secondXbox, 2).whileTrue(new ElevatorDown(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_DOWN));
 
     driverXbox.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-
   }
 
   /**
@@ -244,7 +286,8 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("New Auto");
+    return autoChooser.getSelected();
+
   }
 
   public void setMotorBrake(boolean brake)

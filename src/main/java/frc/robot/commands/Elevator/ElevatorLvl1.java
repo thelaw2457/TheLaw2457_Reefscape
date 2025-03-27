@@ -35,8 +35,12 @@ public class ElevatorLvl1 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (ELEV_SUBSYSTEM.lvl2SwitchVal()) {
     double speed = pidController.calculate(ELEV_SUBSYSTEM.getPosition());
     ELEV_SUBSYSTEM.set(speed);
+    } else {
+      ELEV_SUBSYSTEM.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +48,7 @@ public class ElevatorLvl1 extends Command {
   public void end(boolean interrupted) {
     ELEV_SUBSYSTEM.stop();
   }
+  
 
   // Returns true when the command should end.
   @Override

@@ -4,27 +4,23 @@
 
 package frc.robot.commands.Elevator;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Mechanisms.ElevatorSubsystem;
+import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ElevatorStartPos extends Command {
+public class ElevatorSwitchLvl2 extends Command {
 
   private ElevatorSubsystem ELEV_SUBSYSTEM;
-  private PIDController pidController;
+  private double elevSpeed;
 
-  /** Creates a new ElevatorLift. */
-  public ElevatorStartPos(ElevatorSubsystem elev, double setpoint) {
+  /** Creates a new ElevatorSwitchLvl2. */
+  public ElevatorSwitchLvl2(ElevatorSubsystem elev, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     this.ELEV_SUBSYSTEM = elev;
-
-    this.pidController = new PIDController(Constants.ElevatorConstants.ELEV_KP, Constants.ElevatorConstants.ELEV_KI, Constants.ElevatorConstants.ELEV_KD);
-
-    pidController.setSetpoint(setpoint);
-
+    this.elevSpeed = speed;
     addRequirements(ELEV_SUBSYSTEM);
 
   }
@@ -36,12 +32,17 @@ public class ElevatorStartPos extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (ELEV_SUBSYSTEM.homeSwitchVal()) {
-     double speed = pidController.calculate(ELEV_SUBSYSTEM.getPosition());
-     ELEV_SUBSYSTEM.set(speed);
-    // } else {
-    //   ELEV_SUBSYSTEM.stop();
-    // }
+
+    if (!ELEV_SUBSYSTEM.lvl2SwitchVal()) {
+      ELEV_SUBSYSTEM.set(elevSpeed);
+    } else {
+      ELEV_SUBSYSTEM.stop();
+    }
+
+    if (ELEV_SUBSYSTEM.lvl2SwitchVal()) {
+      Constants.ElevatorConstants.LVL2_SWITCH = true;
+    }
+
   }
 
   // Called once the command ends or is interrupted.

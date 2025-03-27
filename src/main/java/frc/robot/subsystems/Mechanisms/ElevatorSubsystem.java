@@ -9,6 +9,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
@@ -20,6 +21,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   private final SparkMax m_elevatorMotorR = new SparkMax(42, SparkMax.MotorType.kBrushless);
 
   private final AnalogPotentiometer elevatorPot = new AnalogPotentiometer(3, 27, -0.215); //TODO: Change offset of pot
+
+  private final DigitalInput lvl2Switch = new DigitalInput(8);
+  private final DigitalInput lvl3Switch = new DigitalInput(7);
+  private final DigitalInput homeSwitch = new DigitalInput(5);
 
   public ElevatorSubsystem() {
 
@@ -35,6 +40,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     SmartDashboard.putNumber("Elevator Lift Pot.", elevatorPot.get());
 
+    SmartDashboard.putBoolean("lvl 2 Switch", lvl2Switch.get());
+    SmartDashboard.putBoolean("lvl 3 Switch", lvl3Switch.get());
+    SmartDashboard.putBoolean("home Switch", homeSwitch.get());
+
   }
 
   public void set(double elevSpeed) {
@@ -49,6 +58,18 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public double getPosition() {
     return elevatorPot.get();
+  }
+
+  public boolean lvl2SwitchVal() {
+    return lvl2Switch.get();
+  }
+
+  public boolean lvl3SwitchVal() {
+    return lvl3Switch.get();
+  }
+
+  public boolean homeSwitchVal() {
+    return homeSwitch.get();
   }
 
 }

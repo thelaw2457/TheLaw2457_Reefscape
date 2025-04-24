@@ -57,7 +57,7 @@ public final class Constants
     
     public static final double ELEV_START = 0.3;
     public static final double ELEV_LVL1 = 6.39;
-    public static final double ELEV_LVL2 = 13.25;
+    public static final double ELEV_LVL2 = 13.5;
     public static final double ELEV_LVL3 = 23.2;
     public static final double ELEV_CLIMB = 15;
     public static final double ELEV_CLIMBED = 2.5;

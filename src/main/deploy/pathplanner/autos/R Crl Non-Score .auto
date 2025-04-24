@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R Start To BR Reef"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BR Reef To R CRL-ST"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R CRL_ST Backup"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

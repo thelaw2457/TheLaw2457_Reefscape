@@ -246,7 +246,8 @@ public class RobotContainer
     new POVButton(operatorXbox, 270).onTrue(new ElevatorLvl1(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL1));
     new POVButton(operatorXbox, 90).onTrue(new ElevatorLvl2(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_LVL2));
     new JoystickButton(operatorXbox, 4).onTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMB));
-    new JoystickButton(operatorXbox, 9).onTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMBED));
+    // new JoystickButton(operatorXbox, 9).onTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMBED));
+    driverXbox.x().onTrue(new ElevatorClimb(m_elevatorSubsystem, Constants.ElevatorConstants.ELEV_CLIMBED));
 
     //Funnel Pivot Control
     new JoystickButton(operatorXbox, 3).onTrue(new PIvotIntakePos(m_funnelPivotSubsystem, Constants.PivotConstants.PIVOT_INTAKE));

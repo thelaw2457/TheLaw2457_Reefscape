@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Start To BL Reef"
+            "pathName": "L Start To BL Reef"
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "L CRL_ST Backup"
+            "pathName": "L CRL-ST Backup"
           }
         }
       ]
